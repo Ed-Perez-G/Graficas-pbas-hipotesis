@@ -1,0 +1,70 @@
+#This functionThis function will help to create a graph to visually identify where the z values are located, 
+# it also allows the identification of the acceptance zones and the rejection zones.
+
+## Función para zona de rechazo distrubución Z bilateral
+decision_bilateral_z <- function(rechazo1, rechazo2, valor_estimado)
+  {
+  # Rechazo 1= Valores positivo
+  # Rechazo 2= Valores negativos
+  # valor_estimado= mi valor de z
+  y <- (rnorm(10000000, mean=0, sd=1))
+  den <- density(y)
+  plot(den,  main="Gráfica decisión bilateral valores de z", xlab="Valores de Z")
+  value <- rechazo1
+  polygon(c(den$x[den$x >= value ], value),
+        c(den$y[den$x >= value ], 0),
+        col = "slateblue1",
+        border = 1)
+  value <- rechazo2
+  polygon(c(den$x[den$x <= value ], value),
+        c(den$y[den$x <= value ], 0),
+        col = "slateblue1",
+        border = 1)
+        legend(x="topleft", legend = "Zona aceptación zona blanca y 
+       la linea verde estadístico obtenido")
+        abline(v=valor_estimado, col="green", lw=4)
+}
+
+decision_bilateral_z(rechazo1 = 1.96, rechazo2 = -1.96, valor_estimado = 0.5)
+# con el ejemplo anterior deberíamos indentificar las zonas de rechazo  para una hipótesis bilateral con un alfa de 0.05
+
+
+## Función para zona de rechazo distrubución Z balores positivos
+
+decision_derecha_z <- function(rechazo1, valor_estimado)
+{
+  # Rechazo 1= valor de rechazo derecha, no se pued eicnluir valores negativos o al izq. de la media
+  # valor_estimado= mi valor de z
+  y <- (rnorm(10000000, mean=0, sd=1))
+  den <- density(y)
+  plot(den,  main="Gráfica decisión derecha valores de z", xlab="Valores de Z")
+  value <- rechazo1
+  polygon(c(den$x[den$x >= value ], value),
+          c(den$y[den$x >= value ], 0),
+          col = "slateblue1",
+          border = 1)
+  legend(x="topleft", legend = "Zona aceptación zona blanca y 
+       la linea verde estadístico obtenido")
+  abline(v=valor_estimado, col="green", lw=4)
+}
+
+decision_derecha_z(rechazo1 = 2, valor_estimado = 0.5)
+
+## Función para zona de rechazo distrubución Z balores negativos+
+
+decision_izquierda_z <- function(rechazo1, valor_estimado)
+{
+  # Rechazo 1= valor de rechazo izquierda, no se puede incluir valores positivos o a la der. de la media
+  # valor_estimado= mi valor de z
+  y <- (rnorm(10000000, mean=0, sd=1))
+  den <- density(y)
+  plot(den,  main="Gráfica decisión derecha valores de z", xlab="Valores de Z")
+  value <- rechazo1
+  polygon(c(den$x[den$x <= value ], value),
+          c(den$y[den$x <= value ], 0),
+          col = "slateblue1",
+          border = 1)
+  legend(x="topleft", legend = "Zona aceptación zona blanca y 
+       la linea verde estadístico obtenido")
+  abline(v=valor_estimado, col="green", lw=4)
+}
